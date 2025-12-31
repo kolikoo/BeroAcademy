@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
+
 
 // --- კონფიგურაცია ---
 // აქ ჩასვი შენი Finnhub-ის API გასაღები
@@ -26,7 +26,7 @@ interface FinnhubResponse {
 }
 
 const SectionThree: React.FC = () => {
-  const { t } = useTranslation();
+
 
   // ეს მასივი გვჭირდება, რომ ვიცოდეთ ვისი ფასები წამოვიღოთ და ლოგოები შევინარჩუნოთ
   const baseStocks: Stock[] = [
