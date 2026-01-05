@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-
 // --- კონფიგურაცია ---
-// აქ ჩასვი შენი Finnhub-ის API გასაღები
-const API_KEY = "d59pr4pr01qgqlm1qlvgd59pr4pr01qgqlm1qm00";
+const API_KEY = "d5drgnpr01qjucj3kk6gd5drgnpr01qjucj3kk70";
 
 interface Stock {
   id: number;
@@ -14,21 +12,17 @@ interface Stock {
   logo: string;
 }
 
-// ინტერფეისი Finnhub-ის პასუხისთვის
 interface FinnhubResponse {
-  c: number; // Current Price
-  d: number; // Change
-  dp: number; // Percent Change
-  h: number; // High
-  l: number; // Low
-  o: number; // Open
-  pc: number; // Previous Close
+  c: number;
+  d: number;
+  dp: number;
+  h: number;
+  l: number;
+  o: number;
+  pc: number;
 }
 
 const SectionThree: React.FC = () => {
-
-
-  // ეს მასივი გვჭირდება, რომ ვიცოდეთ ვისი ფასები წამოვიღოთ და ლოგოები შევინარჩუნოთ
   const baseStocks: Stock[] = [
     {
       id: 1,
@@ -99,42 +93,54 @@ const SectionThree: React.FC = () => {
   ];
 
   const [stocks, setStocks] = useState<Stock[]>(baseStocks);
-  const [loading, setLoading] = useState<boolean>(true); // ჩატვირთვის სტატუსი
+  const [loading, setLoading] = useState<boolean>(true);
 
-  // ფუნქცია მონაცემების წამოსაღებად
   const fetchStockData = async () => {
-    try {
-      // Promise.all-ს ვიყენებთ, რომ ყველა კომპანიის მონაცემი პარალელურად წამოვიღოთ
-      const promises = baseStocks.map(async (stock) => {
+    // 300 მილიწამიანი პაუზა მოთხოვნებს შორის, რომ API-მ არ დაგბლოკოს
+    const delay = (ms: number) =>
+      new Promise((resolve) => setTimeout(resolve, ms));
+
+    const updatedStocks = [...baseStocks];
+    setLoading(true);
+
+    for (let i = 0; i < baseStocks.length; i++) {
+      const stock = baseStocks[i];
+
+      try {
         const response = await fetch(
           `https://finnhub.io/api/v1/quote?symbol=${stock.symbol}&token=${API_KEY}`
         );
-        const data: FinnhubResponse = await response.json();
 
-        return {
-          ...stock,
-          price: data.c, // c = Current price (Finnhub-ის დოკუმენტაციიდან)
-          change: data.dp, // dp = Percentage change
-        };
-      });
+        if (response.ok) {
+          const data: FinnhubResponse = await response.json();
+          if (data.c) {
+            updatedStocks[i] = {
+              ...stock,
+              price: data.c,
+              change: data.dp,
+            };
+          }
+        } else {
+          console.warn(
+            `სტოკი ${stock.symbol} ვერ ჩაიტვირთა: ${response.status}`
+          );
+        }
+      } catch (error) {
+        console.error(`Error fetching ${stock.symbol}`, error);
+      }
 
-      const updatedStocks = await Promise.all(promises);
-      setStocks(updatedStocks);
-      setLoading(false);
-    } catch (error) {
-      console.error("შეცდომა მონაცემების წამოღებისას:", error);
-      setLoading(false);
+      await delay(300); // ველოდებით ცოტა ხანს შემდეგი სტოკის წამოღებამდე
     }
+
+    setStocks(updatedStocks);
+    setLoading(false);
   };
 
   useEffect(() => {
-    // 1. პირველი წამოღება გვერდის გახსნისას
+    // მხოლოდ ერთხელ გამოიძახება ჩატვირთვისას
     fetchStockData();
 
-    // 2. განახლება ყოველ 60 წამში (Finnhub Free Tier-ს აქვს ლიმიტი, ამიტომ 3 წამი არ გირჩევ)
-    const interval = setInterval(fetchStockData, 60000);
-
-    return () => clearInterval(interval);
+    // აქ ადრე ეწერა setInterval, რომელიც წავშალე
   }, []);
 
   return (
@@ -150,13 +156,10 @@ const SectionThree: React.FC = () => {
           </h2>
         </div>
 
-        {/* თუ იტვირთება, ვაჩვენოთ ლოადერი ან ძველი მონაცემები */}
         {loading ? (
           <div className="flex justify-center items-center h-64 w-full">
             <div className="relative flex justify-center items-center">
-              {/* გარე წრე */}
               <div className="absolute animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"></div>
-              {/* შიდა სტატიკური წრე ან ლოგო (სურვილისამებრ), ან უბრალოდ მეორე ფერი */}
               <div className="rounded-full h-16 w-16 border-t-4 border-b-4 border-gray-200 opacity-30"></div>
             </div>
           </div>
@@ -196,7 +199,6 @@ const SectionThree: React.FC = () => {
                         isPositive ? "text-green-600" : "text-red-500"
                       }`}
                     >
-                      {/* ისრები და პროცენტები იგივე რჩება */}
                       <span>
                         {isPositive ? "▲" : "▼"}{" "}
                         {stock.change ? stock.change.toFixed(2) : "0.00"}%

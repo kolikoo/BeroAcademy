@@ -2,6 +2,7 @@ import type React from "react";
 import { useTranslation } from "react-i18next";
 // ფოტოს იმპორტი (შეცვალე თუ სხვგან გაქვს)
 import bgImage from "../../../images/firstSectionCover.jpg";
+import beroLogo from "../../../images/beros logo .png"
 
 const FirstSection: React.FC = () => {
   const { t } = useTranslation();
@@ -22,13 +23,15 @@ const FirstSection: React.FC = () => {
       {/* flex-col და items-center მობილურისთვის, md:items-start დესკტოპისთვის */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-16 md:py-32 lg:py-44 flex flex-col items-center md:items-start text-center md:text-left">
         {/* 1. ლოგო + სათაური */}
-        <div className="flex items-center gap-3 mb-6 animate-fade-in-up">
-          <div className="w-10 h-10 bg-white rounded-md flex items-center justify-center shadow-xl shadow-white/10">
-            <span className="font-bold text-black text-xl font-mono">B</span>
+        <div className="flex items-center gap-3 w-40 h-36 animate-fade-in-up">
+          {/* შეცვალე w-28 და h-28 -ზე */}
+          <div className="w-36 h-36">
+            <img
+              className="object-contain h-full w-full drop-shadow-[0_0_8px_rgba(79,255,176,0.3)]"
+              src={beroLogo}
+              alt=""
+            />
           </div>
-          <span className="text-2xl md:text-3xl font-bold tracking-wide text-white">
-            Bero<span className="font-light text-gray-300">Academy</span>
-          </span>
         </div>
 
         {/* 2. მთავარი დიდი სათაური (H1) */}
@@ -47,7 +50,7 @@ const FirstSection: React.FC = () => {
 
         {/* 4. ღილაკი */}
         <div className="mt-8 md:mt-12 w-full md:w-auto">
-          <button className="w-full md:w-auto px-8 py-4 rounded-full bg-[#635BFF] text-white text-lg font-bold hover:bg-[#534adb] hover:shadow-lg hover:shadow-indigo-500/30 transition-all duration-300 active:scale-95 border border-transparent hover:border-white/20">
+          <button className="w-full md:w-auto px-8 py-4 rounded-full hover:text-[#4FFFB0] transition-colors duration-300 bg-[#4FFFB0] text-black text-lg font-bold hover:bg-[#534adb] hover:shadow-lg hover:shadow-indigo-500/30  active:scale-95 border border-transparent hover:border-white/20">
             {t("firstSection.button")}
           </button>
         </div>
