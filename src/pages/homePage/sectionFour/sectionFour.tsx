@@ -69,7 +69,7 @@ const SectionFour: React.FC<SectionFourProps> = ({ selectedCourse }) => {
     <section className="w-full flex flex-col md:flex-row overflow-hidden bg-white text-white">
       {/* ================= LEFT SIDE (REGISTRATION FORM) ================= */}
       <div className="relative w-full md:w-1/2 bg-[#1C1F25] p-8 md:p-12 lg:p-16 flex flex-col justify-center overflow-hidden">
-        {/* ... (მარცხენა მხარე იგივე რჩება) ... */}
+        {/* დეკორაციები */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
         <svg
           className="absolute bottom-0 left-0 text-[#CAE3DE] w-full h-32 pointer-events-none"
@@ -176,22 +176,27 @@ const SectionFour: React.FC<SectionFourProps> = ({ selectedCourse }) => {
       </div>
 
       {/* ================= RIGHT SIDE (BACKGROUND IMAGE + LOGO) ================= */}
-      <div
-        // "w-11" შევცვალე "w-full"-ით, რომ მობილურზე ნორმალურად გამოჩნდეს
-        className="relative w-full md:w-1/2 min-h-[500px] md:min-h-auto bg-[#1C1F25] p-10 md:p-16 lg:p-24 flex flex-col justify-center items-center overflow-hidden bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url(${sectionFourBackground})`,
-        }}
-      >
-        {/* მუქი ფენა (Overlay) */}
-        <div className="absolute inset-0 bg-black/40 z-0"></div>
+      <div className="relative w-full md:w-1/2 min-h-[500px] md:min-h-auto bg-[#1C1F25] flex flex-col justify-center items-center overflow-hidden">
+        {/* --- 1. ბექგრაუნდ სურათი (Img ტეგით, რომ სწრაფად ჩაიტვირთოს) --- */}
+        <img
+          src={sectionFourBackground}
+          alt="Section Background"
+          className="absolute inset-0 w-full h-full object-cover z-0"
+          loading="eager" // ეს ეუბნება ბრაუზერს რომ სასწრაფოდ ჩატვირთოს
+          fetchPriority="high" // ეს კი პრიორიტეტს ანიჭებს
+        />
 
-        {/* --- ლოგო --- */}
+        {/* მუქი ფენა (Overlay) */}
+        <div className="absolute inset-0 bg-black/40 z-10"></div>
+
+        {/* --- 2. ლოგო (ასევე პრიორიტეტით) --- */}
         <img
           src={beroAcademylogo}
           alt="Bero Academy Logo"
-          className="relative z-20 object-contain drop-shadow-[0_0_10px_rgba(79,255,176,0.5)]" // ოდნავი ნათებაც დავამატე
+          className="relative z-20 object-contain drop-shadow-[0_0_10px_rgba(79,255,176,0.5)]"
           style={{ width: "400px", height: "200px" }}
+          loading="eager" // ლოგოც მომენტალურად ჩაიტვირთება
+          fetchPriority="high"
         />
       </div>
     </section>
