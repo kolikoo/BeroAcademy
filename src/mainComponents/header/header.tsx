@@ -1,21 +1,43 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate, useLocation } from "react-router-dom"; // დავამატეთ Hook-ები
 import beroAcademyLogo from "../../images/beros logo .png";
-// თუ გაქვს ჰედერის ბექგრაუნდ სურათი, აქ შემოიტანე, მაგალითად:
-// import headerBgImage from "../../images/header-bg.jpg";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // ენის შეცვლა
+  // ნავიგაციისთვის საჭირო Hook-ები
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // --- უნივერსალური ნავიგაციის ფუნქცია ---
+  const handleNavigation = (sectionId: string) => {
+    setIsMobileMenuOpen(false); // მენიუს დახურვა მობილურზე
+
+    // 1. თუ უკვე მთავარ გვერდზე ვართ
+    if (location.pathname === "/") {
+      if (sectionId === "top") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    }
+    // 2. თუ სხვა გვერდზე ვართ (მაგ: დეტალურზე)
+    else {
+      navigate("/", { state: { scrollTo: sectionId } });
+    }
+  };
+
   const changeLanguage = (lang: string) => {
     i18n.changeLanguage(lang);
     setIsLangOpen(false);
   };
 
-  // სქროლის გათიშვა მობილურ მენიუზე
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -26,53 +48,57 @@ const Header = () => {
 
   return (
     <header
-      // --- ყურადღება: აქ ვცვლით ბექგრაუნდს ---
       style={{
         backgroundImage: `
       linear-gradient(
         to right, 
-        rgba(15, 17, 21, 0.98),  /* მარცხნივ: თითქმის სრულიად შავი (რომ თეთრი ტექსტი კარგად ჩანდეს) */
-        rgba(15, 17, 21, 0.7),   /* შუაში: გარდამავალი მუქი */
-        rgba(79, 255, 176, 0.85) /* მარჯვნივ: შენი ღილაკის მწვანე (#4FFFB0) */
+        rgba(15, 17, 21, 0.98),
+        rgba(15, 17, 21, 0.7),
+        rgba(79, 255, 176, 0.85)
       ),
-      url("შენი_სურათის_მისამართი_აქ.jpg")`,
+      url("YOUR_IMAGE_PATH_HERE")`, // ჩასვი შენი სურათის მისამართი
       }}
       className="bg-[#0F1115] text-white w-full border-b border-white/10 sticky top-0 z-50 transition-all duration-300 bg-cover bg-center bg-no-repeat"
     >
-      <div className="bg-[#0F1115]/30 w-full h-full absolute inset-0 -z-10 backdrop-blur-[2px]"></div>{" "}
-      {/* დამატებითი ეფექტი ბლარისთვის თუ გინდა */}
+      <div className="bg-[#0F1115]/30 w-full h-full absolute inset-0 -z-10 backdrop-blur-[2px]"></div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-20 md:h-28 flex items-center justify-between relative z-10">
         {/* --- LOGO --- */}
-        <div className="flex items-center gap-3 sm:gap-4 cursor-pointer select-none group">
+        <button
+          onClick={() => handleNavigation("top")}
+          className="flex items-center gap-3 sm:gap-4 cursor-pointer select-none group bg-transparent border-none p-0"
+        >
           <div className="w-40 h-20 rounded-lg flex items-center justify-center transition-all">
             <img
               src={beroAcademyLogo}
               alt="beros logo"
-              className="object-contain h-full w-full drop-shadow-[0_0_8px_rgba(79,255,176,0.3)]" // ლოგოსაც ოდნავი ნათება დავუმატე
+              className="object-contain h-full w-full drop-shadow-[0_0_8px_rgba(79,255,176,0.3)]"
             />
           </div>
-        </div>
+        </button>
 
         {/* --- DESKTOP NAVIGATION --- */}
         <nav className="hidden md:flex items-center gap-8 lg:gap-10 text-base font-medium text-gray-400">
-          <a
-            href="#"
-            className="hover:text-[#4FFFB0] transition-colors py-2 duration-300 hover:shadow-[0_20px_20px_-10px_rgba(79,255,176,0.2)]"
+          <button
+            onClick={() => handleNavigation("top")}
+            className="hover:text-[#4FFFB0] transition-colors duration-300 bg-transparent border-none cursor-pointer hover:shadow-[0_20px_20px_-10px_rgba(79,255,176,0.2)]"
           >
-            {t("header.scholars")}
-          </a>
-          <a
-            href="#"
-            className="hover:text-[#4FFFB0] transition-colors py-2 duration-300"
+            მთავარი
+          </button>
+
+          <button
+            onClick={() => handleNavigation("aboutSection")}
+            className="hover:text-[#4FFFB0] transition-colors duration-300 bg-transparent border-none cursor-pointer"
           >
-            {t("header.teams")}
-          </a>
-          <a
-            href="#"
-            className="hover:text-[#4FFFB0] transition-colors py-2 duration-300"
+            ჩვენ შესახებ
+          </button>
+
+          <button
+            onClick={() => handleNavigation("coursesSection")}
+            className="hover:text-[#4FFFB0] transition-colors duration-300 bg-transparent border-none cursor-pointer"
           >
-            {t("header.educators")}
-          </a>
+            კურსები
+          </button>
         </nav>
 
         {/* --- RIGHT SIDE ACTIONS (Desktop) --- */}
@@ -128,14 +154,12 @@ const Header = () => {
 
           <div className="w-px h-8 bg-gray-700/50"></div>
 
-          {/* Secondary Button */}
-          <button className="px-6 py-2.5 rounded-full border border-gray-600 text-sm font-medium text-gray-300 hover:text-[#4FFFB0] hover:border-[#4FFFB0] hover:bg-[#4FFFB0]/5 transition-all duration-300">
-            {t("header.students")}
-          </button>
-
-          {/* Main Button */}
-          <button className="px-7 py-2.5 rounded-full bg-[#4FFFB0] text-[#0F1115] text-sm font-bold hover:bg-[#3debb3] hover:shadow-[0_0_20px_rgba(79,255,176,0.4)] transition-all duration-300 active:scale-95">
-            {t("header.courses")}
+          {/* Contact Button */}
+          <button
+            onClick={() => handleNavigation("sectionFour")}
+            className="px-7 py-2.5 rounded-full bg-[#4FFFB0] text-[#0F1115] text-sm font-bold hover:bg-[#3debb3] hover:shadow-[0_0_20px_rgba(79,255,176,0.4)] transition-all duration-300 active:scale-95 cursor-pointer"
+          >
+            დაგვიკავშირდით
           </button>
         </div>
 
@@ -186,39 +210,31 @@ const Header = () => {
           </button>
         </div>
       </div>
+
       {/* --- MOBILE MENU OVERLAY --- */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 bg-[#0F1115]/95 backdrop-blur-sm z-40 flex flex-col pt-24 px-6 md:hidden animate-in fade-in slide-in-from-top-10 duration-300">
           <nav className="flex flex-col gap-6 text-xl font-medium text-gray-300">
-            <a
-              href="#"
-              className="border-b border-gray-800 pb-4 hover:text-[#4FFFB0]"
-              onClick={() => setIsMobileMenuOpen(false)}
+            <button
+              className="text-left border-b border-gray-800 pb-4 hover:text-[#4FFFB0]"
+              onClick={() => handleNavigation("aboutSection")}
             >
-              {t("header.scholars")}
-            </a>
-            <a
-              href="#"
-              className="border-b border-gray-800 pb-4 hover:text-[#4FFFB0]"
-              onClick={() => setIsMobileMenuOpen(false)}
+              ჩვენ შესახებ
+            </button>
+            <button
+              className="text-left border-b border-gray-800 pb-4 hover:text-[#4FFFB0]"
+              onClick={() => handleNavigation("coursesSection")}
             >
-              {t("header.teams")}
-            </a>
-            <a
-              href="#"
-              className="border-b border-gray-800 pb-4 hover:text-[#4FFFB0]"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              {t("header.educators")}
-            </a>
+              {t("header.courses") || "კურსები"}
+            </button>
           </nav>
 
           <div className="mt-8 flex flex-col gap-4">
-            <button className="w-full py-4 rounded-xl border border-gray-600 text-lg font-medium text-white hover:border-[#4FFFB0] hover:text-[#4FFFB0]">
-              {t("header.students")}
-            </button>
-            <button className="w-full py-4 rounded-xl bg-[#4FFFB0] text-[#0F1115] text-lg font-bold shadow-[0_0_20px_rgba(79,255,176,0.3)]">
-              {t("header.courses")}
+            <button
+              onClick={() => handleNavigation("sectionFour")}
+              className="px-7 py-2.5 rounded-full bg-[#4FFFB0] text-[#0F1115] text-sm font-bold hover:bg-[#3debb3] hover:shadow-[0_0_20px_rgba(79,255,176,0.4)] transition-all duration-300 active:scale-95"
+            >
+              დაგვიკავშირდით
             </button>
           </div>
         </div>

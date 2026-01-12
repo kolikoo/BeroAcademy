@@ -1,22 +1,57 @@
-import React, { useState, useRef } from "react";
-import FirstBanner from "./firstBanner/firstBanner";
+import React, { useState, useRef, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import AboutUs from "../AboutPage/aboutUs";
 import FirstSection from "./firstSection/firstSection";
 import SecondSection from "./secondSection/secondSection";
 import SectionFour from "./sectionFour/sectionFour";
 import SectionThree from "./sectionThree/sectionThree";
+import FirstBanner from "./firstBanner/firstBanner";
 
 const HomePage: React.FC = () => {
-  // 1. ვქმნით მეხსიერებას (State) არჩეული კურსისთვის
   const [selectedCourse, setSelectedCourse] = useState<string>("");
-
-  // 2. ვქმნით მისამართს (Ref), რომ საიტმა იცოდეს სად არის ფორმა
   const formSectionRef = useRef<HTMLDivElement>(null);
 
-  // 3. ფუნქცია, რომელიც გამოიძახება კურსზე დაჭერისას
-  const handleCourseSelect = (courseName: string) => {
-    setSelectedCourse(courseName); // ინახავს კურსის სახელს
+  const location = useLocation();
+  const navigate = useNavigate();
 
-    // ეს ხაზი ჩამოსქროლავს ფორმამდე ს무ზად (smooth)
+  useEffect(() => {
+    // 1. თუ რეგისტრაციისთვის მოვდივართ (CourseDetails-იდან)
+    if (location.state?.scrollToRegistration) {
+      if (location.state.selectedCourse) {
+        setSelectedCourse(location.state.selectedCourse);
+      }
+      setTimeout(() => {
+        formSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+
+    // 2. თუ Header-იდან მოვდივართ კონკრეტულ სექციაზე
+    if (location.state?.scrollTo) {
+      const sectionId = location.state.scrollTo;
+
+      if (sectionId === "top") {
+        window.scrollTo(0, 0);
+      } else {
+        setTimeout(() => {
+          const element = document.getElementById(sectionId);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 100);
+      }
+    }
+
+    // ვასუფთავებთ state-ს, თუ რამე ეწერა, რომ რეფრეშზე არ გაიმეოროს
+    if (
+      location.state &&
+      (location.state.scrollTo || location.state.scrollToRegistration)
+    ) {
+      navigate("/", { replace: true, state: {} });
+    }
+  }, [location, navigate]);
+
+  const handleCourseSelect = (courseName: string) => {
+    setSelectedCourse(courseName);
     formSectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -24,15 +59,19 @@ const HomePage: React.FC = () => {
     <>
       <FirstSection />
 
-      {/* SecondSection-ს ვაწვდით ფუნქციას: "როცა რამეს აირჩევენ, ეს ქენი" */}
-      <SecondSection onCourseSelect={handleCourseSelect} />
+      {/* ID-ები აუცილებელია რომ Header-მა იპოვოს */}
+      <div id="coursesSection" className="scroll-mt-28">
+        <SecondSection onCourseSelect={handleCourseSelect} />
+      </div>
+
+      <div id="aboutSection" className="scroll-mt-32">
+        <AboutUs />
+      </div>
 
       <FirstBanner />
       <SectionThree />
 
-      {/* ამ დივს ვადებთ რეფერენსს (ნიშნულს), რომ აქ ჩამოსქროლდეს */}
-      <div ref={formSectionRef}>
-        {/* SectionFour-ს ვაწვდით არჩეულ კურსს */}
+      <div id="sectionFour" ref={formSectionRef} className="scroll-mt-32">
         <SectionFour selectedCourse={selectedCourse} />
       </div>
     </>
