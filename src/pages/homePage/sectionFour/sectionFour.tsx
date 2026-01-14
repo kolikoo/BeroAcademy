@@ -86,9 +86,9 @@ const SectionFour: React.FC<SectionFourProps> = ({ selectedCourse }) => {
         <div className="relative z-10 max-w-lg w-full mx-auto">
           <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-6 leading-tight">
             {selectedCourse
-              ? `დარეგისტრირდი ${selectedCourse}-ზე`
+              ? `დარეგისტრირდი კურსზე „${selectedCourse}“`
               : "შეავსე განაცხადი"}
-          </h2>
+          </h2>ვ
           <p className="text-white mb-8">
             დატოვე შენი მონაცემები და ჩვენ დაგიკავშირდებით დეტალების
             განსახილველად.
@@ -194,7 +194,7 @@ const SectionFour: React.FC<SectionFourProps> = ({ selectedCourse }) => {
           src={beroAcademylogo}
           alt="Bero Academy Logo"
           className="relative z-20 object-contain drop-shadow-[0_0_10px_rgba(79,255,176,0.5)]"
-          style={{ width: "400px", height: "200px" }}
+          style={{ width: "600px", height: "400px" }}
           loading="eager" // ლოგოც მომენტალურად ჩაიტვირთება
           fetchPriority="high"
         />

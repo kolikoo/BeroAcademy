@@ -68,7 +68,7 @@ const Header = () => {
           onClick={() => handleNavigation("top")}
           className="flex items-center gap-3 sm:gap-4 cursor-pointer select-none group bg-transparent border-none p-0"
         >
-          <div className="w-40 h-20 rounded-lg flex items-center justify-center transition-all">
+          <div className="w-[300px] h-20 rounded-lg flex items-center justify-center transition-all">
             <img
               src={beroAcademyLogo}
               alt="beros logo"

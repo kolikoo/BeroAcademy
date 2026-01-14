@@ -1,11 +1,17 @@
 import type React from "react";
-import { useTranslation } from "react-i18next";
-// ფოტოს იმპორტი (შეცვალე თუ სხვგან გაქვს)
 import bgImage from "../../../images/firstSectionCover.jpg";
-import beroLogo from "../../../images/beros logo .png"
+import beroLogo from "../../../images/beros logo .png";
 
 const FirstSection: React.FC = () => {
-  const { t } = useTranslation();
+
+
+  // ფუნქცია ჩამოსასქროლად
+  const scrollToCourses = () => {
+    const section = document.getElementById("coursesSection");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <section className="relative w-full overflow-hidden min-h-[600px] flex items-center">
@@ -16,42 +22,37 @@ const FirstSection: React.FC = () => {
         className="absolute inset-0 w-full h-full object-cover z-0"
       />
 
-      {/* მუქი ფენა (Overlay) - რეკომენდებულია მობილურზე ტექსტის კითხვისთვის */}
       <div className="absolute inset-0 bg-black/30 z-0"></div>
 
       {/* ================= MAIN CONTENT ================= */}
-      {/* flex-col და items-center მობილურისთვის, md:items-start დესკტოპისთვის */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-16 md:py-32 lg:py-44 flex flex-col items-center md:items-start text-center md:text-left">
-        {/* 1. ლოგო + სათაური */}
-        <div className="flex items-center gap-3 w-40 h-36 animate-fade-in-up">
-          {/* შეცვალე w-28 და h-28 -ზე */}
-          <div className="w-36 h-36">
+      <div className="relative z-10 max-w-7xl mx-auto px-2 py-16 md:py-32 lg:py-44 flex flex-col items-center md:items-start text-center md:text-left">
+        {/* 1. ლოგო - შენარჩუნებულია -ml-[100px] */}
+        <div className="flex items-start justify-start md:justify-start animate-fade-in-up mb-6">
+          <div className="w-64 h-auto sm:w-80 md:w-[400px] -ml-[100px]">
             <img
-              className="object-contain h-full w-full drop-shadow-[0_0_8px_rgba(79,255,176,0.3)]"
+              className="object-contain w-full h-full drop-shadow-[0_0_15px_rgba(79,255,176,0.4)]"
               src={beroLogo}
-              alt=""
+              alt="Bero Logo"
             />
           </div>
         </div>
 
         {/* 2. მთავარი დიდი სათაური (H1) */}
-        {/* ზომები: მობილურზე 4xl, პლანშეტზე 6xl, დიდზე 7xl */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[5.0rem] font-extrabold text-white leading-tight max-w-4xl drop-shadow-lg">
-          ისწავლე
-          {/* br მობილურზე არ გვინდა, დესკტოპზე კი */}
+          Unlock skills
           <br className="hidden md:block" />{" "}
-          <span className="block mt-2">მომავლის პროფესია</span>
+          <span className="block mt-2"> to Unlock freedom</span>
         </h1>
 
-        {/* 3. ქვესათაური */}
-        <p className="mt-6 md:mt-8 text-lg md:text-2xl text-gray-200 max-w-2xl font-medium leading-relaxed drop-shadow-md">
-          {t("firstSection.description")}
-        </p>
+        {/* 3. ქვესათაური (შეგიძლია აქ t("firstSection.description") დააბრუნო თუ გჭირდება) */}
 
-        {/* 4. ღილაკი */}
+        {/* 4. ღილაკი - დაემატა onClick={scrollToCourses} */}
         <div className="mt-8 md:mt-12 w-full md:w-auto">
-          <button className="w-full md:w-auto px-8 py-4 rounded-full hover:text-[#4FFFB0] transition-colors duration-300 bg-[#4FFFB0] text-black text-lg font-bold hover:bg-[#534adb] hover:shadow-lg hover:shadow-indigo-500/30  active:scale-95 border border-transparent hover:border-white/20">
-            {t("firstSection.button")}
+          <button
+            onClick={scrollToCourses}
+            className="w-full md:w-auto px-10 py-4 rounded-full transition-all duration-300 bg-[#4FFFB0] text-black text-lg font-bold hover:bg-[#534adb] hover:text-white hover:shadow-lg hover:shadow-indigo-500/30 active:scale-95 border border-transparent hover:border-white/20"
+          >
+            კურსები
           </button>
         </div>
       </div>

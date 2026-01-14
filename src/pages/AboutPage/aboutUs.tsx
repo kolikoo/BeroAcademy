@@ -6,7 +6,7 @@ const AboutUs: React.FC = () => {
       {/* უკანა ფონის დეკორაცია (სურვილისამებრ) */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#4FFFB0] opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
-      <div className="max-w-5xl mx-auto relative z-10">
+      <div className="max-w-4xl mx-auto relative z-10">
         {/* სათაური */}
         <h2 className="text-3xl md:text-5xl font-extrabold text-[#4FFFB0] mb-8 md:mb-12 border-l-4 border-[#4FFFB0] pl-6">
           ჩვენ შესახებ
