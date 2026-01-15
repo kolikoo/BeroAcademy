@@ -88,7 +88,7 @@ const SectionFour: React.FC<SectionFourProps> = ({ selectedCourse }) => {
             {selectedCourse
               ? `დარეგისტრირდი კურსზე „${selectedCourse}“`
               : "შეავსე განაცხადი"}
-          </h2>ვ
+          </h2>
           <p className="text-white mb-8">
             დატოვე შენი მონაცემები და ჩვენ დაგიკავშირდებით დეტალების
             განსახილველად.

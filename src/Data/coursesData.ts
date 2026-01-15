@@ -20,6 +20,9 @@ export interface Course {
   location?: string;
   descKey?: string;
   mapLink?: string;
+  lectore?: string;
+  oldPrice?: string;
+  time?:string;
 }
 
 export const coursesData: Course[] = [
@@ -27,14 +30,14 @@ export const coursesData: Course[] = [
     id: 1,
     tag: "საფონდო ბირჟაზე ინვესტიცია",
     tagBg: "bg-green-100 text-green-700",
-    hours: "2 თვე",
+    hours: "8 ლექცია",
 
     // სათაური და ქვესათაური ცალკე (ჰედერის ნაწილისთვის)
     title: "ინვესტიცია საფონდო ბირჟაზე",
     subtitle: "გამოიმუშავე ფული, მაშინ როცა გძინავს",
-
+    lectore: "გიორგი ბერუაშვილი",
     startDate: "2 მარტი",
-    schedule: "ორშაბათი/ხუთშაბათი 19:00",
+    schedule: "ორშაბათი/ხუთშაბათი",
     location: "Stamba • D Block",
     mapLink: "https://maps.app.goo.gl/hG5Z2k4x6x1Xy5y56",
 
@@ -69,9 +72,11 @@ Life-time მხარდაჭერა და „საინვესტი�
     shadowColor: "hover:shadow-[8px_8px_0px_#00CC87]",
     circleColor: "bg-[#00CC87]",
     isDisabled: false,
+    time: "19:00",
     image:
       "https://images.unsplash.com/photo-1611974765270-ca1258634369?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-    price: "500 ₾",
+    price: "499 ₾",
+    oldPrice: "625 ₾",
     features: [
       "გლობალური ბაზრები",
       "აქციების შეფასება",
@@ -93,7 +98,8 @@ Life-time მხარდაჭერა და „საინვესტი�
     tagBg: "bg-blue-100 text-blue-700",
     isDisabled: true,
     image: "https://via.placeholder.com/300",
-    price: "600 ₾",
+    price: "499 ₾",
+    oldPrice: "625 ₾",
     features: ["Components", "Hooks", "Redux"],
     bonus: "პორტფოლიო",
   },
@@ -102,6 +108,7 @@ Life-time მხარდაჭერა და „საინვესტი�
     tag: "ემოციური ინტელექტი",
     hours: "~35 hours",
     title: "ემოციური ინტელექტი",
+
     description: "თანამედროვე ვებ ინტერფეისები",
     fullDescription: "ემოციური ინტელექტი",
     borderColor: "hover:border-[#61DAFB]",

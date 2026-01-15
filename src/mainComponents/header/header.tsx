@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom"; // დავამ�
 import beroAcademyLogo from "../../images/beros logo .png";
 
 const Header = () => {
-  const { t, i18n } = useTranslation();
+  const {  i18n } = useTranslation();
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -104,7 +104,7 @@ const Header = () => {
         {/* --- RIGHT SIDE ACTIONS (Desktop) --- */}
         <div className="hidden md:flex items-center gap-5">
           {/* Language Switcher */}
-          <div className="relative">
+          {/* <div className="relative">
             <button
               onClick={() => setIsLangOpen(!isLangOpen)}
               className="flex items-center gap-2 text-sm font-medium text-gray-300 hover:text-white transition-colors px-3 py-2 rounded-md hover:bg-white/5"
@@ -127,7 +127,7 @@ const Header = () => {
             </button>
 
             {isLangOpen && (
-              <div className="absolute right-0 mt-4 w-36 bg-[#0F1115] border border-gray-700/50 rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.5)] py-2 z-50 overflow-hidden">
+              <div className="absolute right-0 mt-4 w-36 d bg-[#0F1115] border border-gray-700/50 rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.5)] py-2 z-50 overflow-hidden">
                 <button
                   onClick={() => changeLanguage("ka")}
                   className={`w-full text-left px-4 py-3 text-sm hover:bg-gray-800 transition-colors flex items-center gap-3 ${
@@ -150,7 +150,7 @@ const Header = () => {
                 </button>
               </div>
             )}
-          </div>
+          </div> */}
 
           <div className="w-px h-8 bg-gray-700/50"></div>
 
@@ -225,7 +225,7 @@ const Header = () => {
               className="text-left border-b border-gray-800 pb-4 hover:text-[#4FFFB0]"
               onClick={() => handleNavigation("coursesSection")}
             >
-              {t("header.courses") || "კურსები"}
+             კურსები
             </button>
           </nav>
 
