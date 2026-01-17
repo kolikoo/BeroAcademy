@@ -39,7 +39,7 @@ const FirstSection: React.FC = () => {
 
         {/* 2. მთავარი დიდი სათაური (H1) */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[5.0rem] font-extrabold text-white leading-tight max-w-4xl drop-shadow-lg">
-          Unlock skills
+          Master skills
           <br className="hidden md:block" />{" "}
           <span className="block mt-2"> to Unlock freedom</span>
         </h1>

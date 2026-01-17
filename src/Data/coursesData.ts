@@ -38,8 +38,8 @@ export const coursesData: Course[] = [
     lectore: "გიორგი ბერუაშვილი",
     startDate: "2 მარტი",
     schedule: "ორშაბათი/ხუთშაბათი",
-    location: "Stamba • D Block",
-    mapLink: "https://maps.app.goo.gl/hG5Z2k4x6x1Xy5y56",
+    location: "Holiday Inn", // აქ ჩაწერე ახალი სახელი
+    mapLink: "https://maps.app.goo.gl/VY6GcJFxcS6z63AYA",
 
     description:
       "ისწავლე საუკეთესო საინვესტიციო კომპანიების მოძიება და საკუთარი კაპიტალის გაზრდა.",

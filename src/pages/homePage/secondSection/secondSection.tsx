@@ -204,8 +204,15 @@ const SingleCard = ({
         </div>
 
         {/* ლოკაცია */}
+        {/* ლოკაცია - განახლებული კოდი */}
         {card.location && (
-          <div className="mt-4 pt-3 border-t border-gray-100 flex items-center gap-2 text-xs font-bold text-gray-400">
+          <a
+            href={card.mapLink || "#"}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 pt-3 border-t border-gray-100 flex items-center gap-2 text-xs font-bold text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
+            onClick={(e) => e.stopPropagation()} // რომ ქარდის ქლიქმა არ იმუშაოს აქ
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -219,7 +226,7 @@ const SingleCard = ({
               />
             </svg>
             {card.location}
-          </div>
+          </a>
         )}
       </div>
 
