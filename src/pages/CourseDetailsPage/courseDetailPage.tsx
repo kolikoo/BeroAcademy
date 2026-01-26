@@ -65,7 +65,7 @@ const CourseDetails: React.FC = () => {
             {course.fullDescription}
           </div>
 
-          <div className="mt-8 pt-8 border-t border-white/10 flex flex-col sm:flex-row gap-6 items-center justify-between">
+          <div className="mt-8 pt-8 border-t border-white/10 pb-8 border-b flex flex-col sm:flex-row gap-6 items-center justify-between">
             <div>
               <span className="block text-gray-500 text-sm mb-1">
                 ხანგრძლივობა
@@ -89,11 +89,13 @@ const CourseDetails: React.FC = () => {
               დარეგისტრირდი კურსზე
             </button>
           </div>
-{/* FsfD? */}
+          {/* FsfD? */}
           {/* ----- სილაბუსის სექცია ----- */}
           {course.syllabus && (
             <div className="mt-16">
-              <h3 className="text-2xl font-bold text-white mb-6">სილაბუსი</h3>
+              <h3 className="text-2xl font-bold m-auto text-[#4FFFB0] text-center mb-6">
+                სილაბუსი
+              </h3>
               <div className="space-y-4">
                 {course.syllabus.map((lecture: any, index: number) => (
                   <div
@@ -150,7 +152,7 @@ const CourseDetails: React.FC = () => {
                           : "max-h-0 opacity-0"
                       }`}
                     >
-                      <div className="p-5 pt-0 text-gray-400 border-t border-white/5">
+                      <div className="p-5 text-gray-400 border-t border-white/5">
                         <ul className="list-disc list-inside space-y-2 ml-2">
                           {lecture.topics.map((topic: string, i: number) => (
                             <li key={i} className="leading-relaxed">
