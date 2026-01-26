@@ -1,13 +1,13 @@
+// src/mainComponents/footer/footer.tsx
 import type React from "react";
-import { useNavigate, useLocation } from "react-router-dom"; // დავამატეთ ნავიგაციისთვის
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Footer: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // --- ნავიგაციის ფუნქცია (იგივე რაც ჰედერს აქვს) ---
+  // --- ნავიგაციის ფუნქცია ---
   const handleNavigation = (sectionId: string) => {
-    // 1. თუ მთავარ გვერდზე ვართ
     if (location.pathname === "/") {
       if (sectionId === "top") {
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -17,9 +17,7 @@ const Footer: React.FC = () => {
           element.scrollIntoView({ behavior: "smooth" });
         }
       }
-    }
-    // 2. თუ სხვა გვერდზე ვართ, გადავიდეს მთავარზე და თან გააყოლოს ინფორმაცია სად დასქროლოს
-    else {
+    } else {
       navigate("/", { state: { scrollTo: sectionId } });
     }
   };
