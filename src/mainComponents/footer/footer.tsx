@@ -1,9 +1,8 @@
 import type React from "react";
-import { useTranslation } from "react-i18next";
 import { useNavigate, useLocation } from "react-router-dom"; // დავამატეთ ნავიგაციისთვის
 
 const Footer: React.FC = () => {
-  const { t } = useTranslation();
+ 
   const navigate = useNavigate();
   const location = useLocation();
 
