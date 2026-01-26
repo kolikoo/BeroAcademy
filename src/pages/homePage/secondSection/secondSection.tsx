@@ -1,66 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { coursesData } from "../../../Data/coursesData";
 
 interface SecondSectionProps {
   onCourseSelect: (courseName: string) => void;
 }
-
-// 1. განახლებული აიქონების ფუნქცია
-const getIcon = (tag: string) => {
-  const className = "w-7 h-7 text-gray-800";
-  switch (tag) {
-    case "Python":
-      return (
-        <svg
-          className={className}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2.2}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-          />
-        </svg>
-      );
-    case "React":
-      return (
-        <svg
-          className={className}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2.2}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"
-          />
-        </svg>
-      );
-    default:
-      // "საფონდო ბირჟისთვის" - ზრდადი გრაფიკის აიქონი
-      return (
-        <svg
-          className={className}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2.2}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-          />
-        </svg>
-      );
-  }
-};
 
 const SingleCard = ({
   card,
@@ -69,37 +13,43 @@ const SingleCard = ({
   card: any;
   onSelect: (name: string) => void;
 }) => {
-  const divRef = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const navigate = useNavigate();
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!divRef.current) return;
-    const rect = divRef.current.getBoundingClientRect();
-    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  // ფერები სურათიდან
+  const darkGreen = "#013026";
+  const lightBg = "#E8EEF1";
+  const priceRed = "#FF3B30";
+
+  // ფუნქცია, რომელიც კლიკზე ხსნის ან ხურავს ქარდს
+  const handleCardClick = () => {
+    if (!card.isDisabled) {
+      setIsActive(!isActive); // Toggle: თუ ჩართულია გამორთავს, თუ გამორთულია ჩართავს
+    }
   };
 
   return (
     <div
-      ref={divRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => {
-        setIsHovered(false);
-        setIsActive(false);
-      }}
-      onClick={() => !card.isDisabled && setIsActive(true)}
-      className={`group relative bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 overflow-hidden transition-all duration-300 ease-out h-full flex flex-col ${
-        !card.isDisabled
-          ? `cursor-pointer hover:-translate-y-2 ${card.borderColor} ${card.shadowColor}`
-          : "cursor-not-allowed"
-      }`}
+      onClick={handleCardClick}
+      // წაშლილია onMouseEnter და onMouseLeave
+      className={`group relative overflow-hidden rounded-[20px] transition-all duration-300 h-full flex flex-col shadow-lg
+        ${
+          !card.isDisabled
+            ? "cursor-pointer" // hover ეფექტები (აწევა) დავტოვე ვიზუალიზაციისთვის, ფუნქციონალი მხოლოდ კლიკზეა
+            : "cursor-not-allowed grayscale-[0.8] opacity-70"
+        }
+        ${
+          isActive
+            ? "-translate-y-2 shadow-2xl"
+            : "hover:-translate-y-2 hover:shadow-2xl"
+        } 
+      `}
+      // ზემოთ კლასებში დავამატე ლოგიკა: თუ isActive არის, მაშინაც აიწიოს მაღლა
+      style={{ backgroundColor: lightBg }}
     >
-      {/* Overlay ღილაკებით */}
+      {/* --- Overlay ღილაკებით --- */}
       <div
-        className={`absolute inset-0 z-30 bg-white/95 backdrop-blur-[2px] flex flex-col items-center justify-center gap-4 transition-all duration-300 ${
+        className={`absolute inset-0 z-40 bg-black/60 backdrop-blur-[3px] flex flex-col items-center justify-center gap-4 transition-all duration-300 ${
           isActive
             ? "opacity-100 visible"
             : "opacity-0 invisible pointer-events-none"
@@ -107,135 +57,140 @@ const SingleCard = ({
       >
         <button
           onClick={(e) => {
-            e.stopPropagation();
+            e.stopPropagation(); // ეს აუცილებელია, რომ ღილაკზე დაჭერამ ქარდი არ დახუროს
             onSelect(card.tag);
           }}
-          className="w-48 py-3 rounded-full bg-[#4FFFB0] text-[#0F1115] font-bold shadow-lg hover:scale-105 transition-all"
+          className="w-48 py-3 rounded-full bg-[#4FFFB0] text-[#0F1115] font-bold shadow-lg hover:scale-105 transition-transform"
         >
           რეგისტრაცია
         </button>
         <button
           onClick={(e) => {
-            e.stopPropagation();
+            e.stopPropagation(); // ეს აუცილებელია, რომ ღილაკზე დაჭერამ ქარდი არ დახუროს
             navigate(`/course/${card.tag}`);
           }}
-          className="w-48 py-3 rounded-full bg-white border-2 border-gray-900 text-gray-900 font-bold hover:scale-105 transition-all"
+          className="w-48 py-3 rounded-full bg-white border-2 border-transparent text-gray-900 font-bold hover:scale-105 transition-transform"
         >
           დეტალები
         </button>
       </div>
 
-      {/* ნათების ეფექტი */}
-      {!card.isDisabled && (
-        <div
-          className={`pointer-events-none absolute rounded-full transition-opacity duration-300 ${
-            isHovered ? "opacity-100" : "opacity-0"
-          } ${card.circleColor} blur-[40px] w-32 h-32`}
-          style={{
-            transform: `translate(${position.x - 64}px, ${position.y - 64}px)`,
-            top: 0,
-            left: 0,
-            zIndex: 0,
-          }}
-        />
-      )}
-
-      <div
-        className={`relative z-10 flex flex-col h-full ${
-          card.isDisabled ? "opacity-40 grayscale-[0.5]" : ""
-        }`}
-      >
-        <div className="flex justify-between items-start mb-6">
-          <div className="p-3 bg-white/80 backdrop-blur-sm rounded-xl border border-gray-100 shadow-sm">
-            {getIcon(card.tag)}
-          </div>
-          <span
-            className={`text-xs font-bold px-3 py-1 rounded-full ${card.tagBg}`}
+      {/* --- Card Content --- */}
+      <div className="relative z-10 flex flex-col h-full p-0">
+        {/* Header Section */}
+        <div className="pt-8 px-6 pb-2">
+          <h3
+            className="text-[26px] font-black leading-tight mb-2"
+            style={{ color: darkGreen }}
           >
-            {card.tag}
-          </span>
+            {card.title || "კურსის სახელი"}
+          </h3>
+          <p className="text-gray-600 text-sm font-medium">
+            გამოიმუშავე ფული - მაშინ როცა გძინავს
+          </p>
         </div>
 
-        <h3 className="text-[22px] font-extrabold text-gray-900 mb-4 leading-tight">
-          {card.title || "კურსი"}
-        </h3>
+        {/* Schedule Badge */}
+        {card.schedule && (
+          <div
+            className="mt-6 py-2 px-6 rounded-r-full self-start text-white text-sm font-bold shadow-md w-max max-w-[90%]"
+            style={{ backgroundColor: darkGreen }}
+          >
+            {card.schedule}
+          </div>
+        )}
 
-        {/* საინფორმაციო ბლოკი - გაერთიანებული და კომპაქტური */}
-        <div className="flex flex-col space-y-1.5 text-[15px] text-gray-800 mb-auto">
-          <p className="flex items-center gap-1.5">
-            <span className="font-normal text-gray-500">ხანგრძლივობა:</span>
+        {/* Info Text Block */}
+        <div className="px-6 mt-6 space-y-2 text-[#2c3e3a]">
+          <p className="text-[15px]">
+            <span className="font-bold opacity-70">ხანგრძლივობა</span> –{" "}
             <span className="font-bold">{card.hours}</span>
           </p>
-          <p className="flex items-center gap-1.5">
-            <span className="font-normal text-gray-500">ლექტორი:</span>
-            <span className="font-bold">{card.lectore}</span>
+          <p className="text-[15px]">
+            <span className="font-bold opacity-70">დასაწყისი:</span>{" "}
+            <span className="font-bold">2 მარტი</span>
           </p>
-          {card.schedule && (
-            <p className="flex items-center gap-1.5">
-              <span className="font-normal text-gray-500">შეხვედრები:</span>
-              <span className="font-bold">{card.schedule}</span>
-            </p>
-          )}
-          <p className="flex items-center gap-1.5">
-            <span className="font-normal text-gray-500">დაწყება:</span>
-            <span className="font-bold text-gray-900">2 მარტი</span>
-          </p>
-          {card.time && (
-            <p className="flex items-center gap-1.5">
-              <span className="font-normal text-gray-500">დრო:</span>
-              <span className="font-bold text-gray-900">{card.time}</span>
-            </p>
+        </div>
+
+        {/* Bottom Section: Price & Lecturer Image */}
+        <div className="mt-auto relative h-[180px]">
+          {/* დიდი მწვანე წრე */}
+          <div
+            className="absolute -right-12 bottom-[-40px] w-64 h-64 rounded-full border-[10px] border-[#dce3e6]"
+            style={{ backgroundColor: darkGreen }}
+          ></div>
+
+          {/* ლექტორის ფოტო */}
+          {card.image ? (
+            <img
+              src={card.image}
+              alt={card.lectore}
+              className="absolute right-2 bottom-2 w-40 h-40 object-cover object-top z-20 rounded-full border-2 border-white shadow-md"
+            />
+          ) : (
+            <div className="absolute right-4 bottom-2 w-32 h-32 bg-gray-400 rounded-full border-4 border-white opacity-50 z-20 overflow-hidden flex items-center justify-center">
+              <span className="text-white text-xs text-center">
+                {card.lectore}
+              </span>
+            </div>
           )}
 
-          {/* ფასის ბლოკი - მხოლოდ აქტიურ კურსებზე */}
+          {/* Price Box */}
           {!card.isDisabled && card.price && (
-            <div className="pt-3 mt-3 border-t border-gray-100">
-              <span className="text-[17px] font-bold text-gray-900 uppercase tracking-wider block mb-1">
-                ღირებულება
+            <div
+              className="absolute left-6 bottom-16 z-30 px-5 py-3 rounded-2xl shadow-xl flex flex-col justify-center min-w-[140px]"
+              style={{ backgroundColor: darkGreen }}
+            >
+              <span className="text-white text-xs font-bold mb-1 opacity-90 text-center">
+                ღირებულება:
               </span>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center gap-3">
                 {card.oldPrice && (
-                  <span className="text-red-500 line-through font-bold text-lg decoration-2">
+                  <span
+                    className="font-bold text-lg line-through decoration-2"
+                    style={{ color: priceRed }}
+                  >
                     {card.oldPrice}
                   </span>
                 )}
-                <span className="text-green-600 font-black text-2xl">
+                <span className="text-white font-black text-2xl tracking-wide">
                   {card.price}
                 </span>
               </div>
             </div>
           )}
-        </div>
 
-        {/* ლოკაცია */}
-        {/* ლოკაცია - განახლებული კოდი */}
-        {card.location && (
-          <a
-            href={card.mapLink || "#"}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 pt-3 border-t border-gray-100 flex items-center gap-2 text-xs font-bold text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
-            onClick={(e) => e.stopPropagation()} // რომ ქარდის ქლიქმა არ იმუშაოს აქ
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-4 h-4"
-            >
-              <path
-                fillRule="evenodd"
-                d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z"
-                clipRule="evenodd"
-              />
-            </svg>
-            {card.location}
-          </a>
-        )}
+          {/* Location */}
+          {card.location && (
+            <div className="absolute left-6 bottom-6 z-30 flex items-center gap-2 text-[#2c3e3a] font-bold text-sm">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                className="w-5 h-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+              <span>{card.location}</span>
+            </div>
+          )}
+        </div>
       </div>
 
+      {/* "მალე დაიწყება" ოვერლეი */}
       {card.isDisabled && (
-        <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px] flex items-center justify-center z-20">
+        <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px] flex items-center justify-center z-50">
           <div className="bg-gray-900 text-white px-5 py-2 rounded-xl shadow-xl font-bold text-sm">
             რეგისტრაცია მალე დაიწყება
           </div>
@@ -252,7 +207,7 @@ const SecondSection: React.FC<SecondSectionProps> = ({ onCourseSelect }) => {
         <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-16 tracking-tight">
           კურსები
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-fr">
           {coursesData.map((card) => (
             <SingleCard key={card.id} card={card} onSelect={onCourseSelect} />
           ))}

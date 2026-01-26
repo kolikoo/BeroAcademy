@@ -1,3 +1,5 @@
+import beroimg from "../images/berolectore.png"
+
 export interface SyllabusItem {
   title: string;
   topics: string[];
@@ -29,6 +31,7 @@ export interface Course {
   oldPrice?: string;
   time?: string;
   syllabus?: SyllabusItem[];
+
 }
 
 export const coursesData: Course[] = [
@@ -42,6 +45,7 @@ export const coursesData: Course[] = [
     lectore: "გიორგი ბერუაშვილი",
     startDate: "2 მარტი",
     schedule: "ორშაბათი/ხუთშაბათი",
+    image: beroimg,
     location: "Holiday Inn",
     mapLink: "https://maps.app.goo.gl/VY6GcJFxcS6z63AYA",
     description:
@@ -70,8 +74,6 @@ export const coursesData: Course[] = [
     circleColor: "bg-[#00CC87]",
     isDisabled: false,
     time: "19:00",
-    image:
-      "https://images.unsplash.com/photo-1611974765270-ca1258634369?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     price: "499 ₾",
     oldPrice: "625 ₾",
     features: [
