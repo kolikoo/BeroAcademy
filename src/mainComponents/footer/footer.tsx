@@ -129,7 +129,7 @@ const Footer: React.FC = () => {
           {/* --- სვეტი 2: ნავიგაცია --- */}
           <div className="flex flex-col items-center gap-4">
             <h3 className="font-bold text-base tracking-wide text-white mb-2">
-              {t("footer.navigation") || "ნავიგაცია"}
+              ჩვენი გვერდი 
             </h3>
             <ul className="flex flex-col gap-3">
               <li>

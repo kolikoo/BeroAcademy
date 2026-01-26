@@ -1,17 +1,23 @@
 // src/components/courseDetails/CourseDetails.tsx
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { coursesData } from "../../Data/coursesData" // დარწმუნდი რომ .tsx-ია ფაილი
+import { coursesData } from "../../Data/coursesData";
 
 const CourseDetails: React.FC = () => {
   const { courseTag } = useParams();
   const navigate = useNavigate();
+  // ეს state გვჭირდება რომ გავიგოთ რომელი ლექციაა გახსნილი
+  const [openLectureIndex, setOpenLectureIndex] = useState<number | null>(null);
 
   const course = coursesData.find((c) => c.tag === courseTag);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const toggleLecture = (index: number) => {
+    setOpenLectureIndex(openLectureIndex === index ? null : index);
+  };
 
   if (!course) {
     return (
@@ -55,7 +61,6 @@ const CourseDetails: React.FC = () => {
             კურსის შესახებ
           </h2>
 
-          {/* აქ პირდაპირ ვსვამთ JSX-ს */}
           <div className="text-gray-300 text-lg leading-loose">
             {course.fullDescription}
           </div>
@@ -84,6 +89,83 @@ const CourseDetails: React.FC = () => {
               დარეგისტრირდი კურსზე
             </button>
           </div>
+
+          {/* ----- სილაბუსის სექცია ----- */}
+          {course.syllabus && (
+            <div className="mt-16">
+              <h3 className="text-2xl font-bold text-white mb-6">სილაბუსი</h3>
+              <div className="space-y-4">
+                {course.syllabus.map((lecture: any, index: number) => (
+                  <div
+                    key={index}
+                    className="border border-white/10 rounded-xl overflow-hidden bg-[#16181D] transition-all duration-300"
+                  >
+                    <button
+                      onClick={() => toggleLecture(index)}
+                      className="w-full flex items-center justify-between p-5 text-left hover:bg-white/5 transition-colors"
+                    >
+                      <span className="text-lg font-semibold text-white">
+                        {lecture.title}
+                      </span>
+                      <span className="ml-4 flex items-center justify-center w-8 h-8 rounded-full border border-white/20 text-gray-400">
+                        {openLectureIndex === index ? (
+                          // ზემოთ ისარი (როცა გახსნილია)
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="m18 15-6-6-6 6" />
+                          </svg>
+                        ) : (
+                          // ქვემოთ ისარი (როცა დახურულია)
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="m6 9 6 6 6-6" />
+                          </svg>
+                        )}
+                      </span>
+                    </button>
+
+                    {/* ჩამოსაშლელი კონტენტი */}
+                    <div
+                      className={`transition-all duration-300 ease-in-out ${
+                        openLectureIndex === index
+                          ? "max-h-[500px] opacity-100"
+                          : "max-h-0 opacity-0"
+                      }`}
+                    >
+                      <div className="p-5 pt-0 text-gray-400 border-t border-white/5">
+                        <ul className="list-disc list-inside space-y-2 ml-2">
+                          {lecture.topics.map((topic: string, i: number) => (
+                            <li key={i} className="leading-relaxed">
+                              {topic}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          {/* ----- სილაბუსის დასასრული ----- */}
         </div>
       </div>
     </section>

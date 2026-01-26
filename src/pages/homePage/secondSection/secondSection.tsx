@@ -176,6 +176,10 @@ const SingleCard = ({
               <span className="font-bold">{card.schedule}</span>
             </p>
           )}
+          <p className="flex items-center gap-1.5">
+            <span className="font-normal text-gray-500">დაწყება:</span>
+            <span className="font-bold text-gray-900">2 მარტი</span>
+          </p>
           {card.time && (
             <p className="flex items-center gap-1.5">
               <span className="font-normal text-gray-500">დრო:</span>
