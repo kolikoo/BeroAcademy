@@ -89,7 +89,7 @@ const CourseDetails: React.FC = () => {
               დარეგისტრირდი კურსზე
             </button>
           </div>
-
+{/* FsfD? */}
           {/* ----- სილაბუსის სექცია ----- */}
           {course.syllabus && (
             <div className="mt-16">
