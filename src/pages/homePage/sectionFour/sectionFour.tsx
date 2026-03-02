@@ -23,6 +23,7 @@ const SectionFour: React.FC<SectionFourProps> = ({ selectedCourse }) => {
     phone: "",
     email: "",
     course: "",
+    promoCode: "", // <--- დაემატა პრომო კოდის ველი
   });
 
   useEffect(() => {
@@ -54,6 +55,7 @@ const SectionFour: React.FC<SectionFourProps> = ({ selectedCourse }) => {
           phone: "",
           email: "",
           course: "",
+          promoCode: "", // <--- გასუფთავდება გაგზავნის შემდეგ
         });
       },
       (error) => {
@@ -137,6 +139,17 @@ const SectionFour: React.FC<SectionFourProps> = ({ selectedCourse }) => {
               required
               className="w-full px-4 py-3 rounded-lg border-none outline-none focus:ring-2 focus:ring-black/20 text-gray-900 placeholder-gray-700 shadow-sm bg-[#4FFFB0]"
             />
+
+            {/* --- პრომო კოდის ინფუთი --- */}
+            <input
+              type="text"
+              name="promoCode"
+              value={formData.promoCode}
+              onChange={handleChange}
+              placeholder="პრომო კოდი (არასავალდებულო)"
+              className="w-full px-4 py-3 rounded-lg border-none outline-none focus:ring-2 focus:ring-black/20 text-gray-900 placeholder-gray-700 shadow-sm bg-[#4FFFB0]"
+            />
+
             <div className="relative">
               <label className="text-xs font-bold ml-1 mb-1 block text-white">
                 არჩეული კურსი

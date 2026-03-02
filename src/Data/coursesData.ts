@@ -1,4 +1,5 @@
 import beroimg from "../images/berolectore.png"
+import cardimg from "../images/cardimg.png"
 
 export interface SyllabusItem {
   title: string;
@@ -31,7 +32,8 @@ export interface Course {
   oldPrice?: string;
   time?: string;
   syllabus?: SyllabusItem[];
-
+  coverImage?: string
+  
 }
 
 export const coursesData: Course[] = [
@@ -73,6 +75,7 @@ export const coursesData: Course[] = [
     shadowColor: "hover:shadow-[8px_8px_0px_#00CC87]",
     circleColor: "bg-[#00CC87]",
     isDisabled: false,
+    coverImage: cardimg,
     time: "19:00",
     price: "499 ₾",
     oldPrice: "625 ₾",
@@ -207,57 +210,7 @@ export const coursesData: Course[] = [
     price: "600 ₾",
     features: ["Components", "Hooks", "Redux"],
     bonus: "პორტფოლიო",
-  },
-  {
-    id: 4,
-    tag: "ხელოვნური ინტელექტი ბიზნესისთვის",
-    hours: "~35 hours",
-    title: "ხელოვნური ინტელექტი ბიზნესისთვის",
-    description: "ხელოვნური ინტელექტი ბიზნესისთვის",
-    fullDescription: "ხელოვნური ინტელექტი ბიზნესისთვის...",
-    borderColor: "hover:border-[#61DAFB]",
-    shadowColor: "hover:shadow-[8px_8px_0px_#61DAFB]",
-    circleColor: "bg-[#61DAFB]",
-    tagBg: "bg-blue-100 text-blue-700",
-    isDisabled: true,
-    image: "https://via.placeholder.com/300",
-    price: "600 ₾",
-    features: ["Components", "Hooks", "Redux"],
-    bonus: "პორტფოლიო",
-  },
-  {
-    id: 5,
-    tag: "როგორ შევქმნათ სტარტაპი",
-    hours: "~153 hours",
-    title: "როგორ შევქმნათ სტარტაპი",
-    description: "თანამედროვე ვებ ინტერფეისები",
-    fullDescription: "როგორ შევქმნათ სტარტაპი...",
-    borderColor: "hover:border-[#61DAFB]",
-    shadowColor: "hover:shadow-[8px_8px_0px_#61DAFB]",
-    circleColor: "bg-[#61DAFB]",
-    tagBg: "bg-blue-100 text-blue-700",
-    isDisabled: true,
-    image: "https://via.placeholder.com/300",
-    price: "600 ₾",
-    features: ["Components", "Hooks", "Redux"],
-    bonus: "პორტფოლიო",
-  },
-  {
-    id: 6,
-    tag: "გაყიდვების ხელოვნება",
-    hours: "~245 hours",
-    title: "გაყიდვების ხელოვნება",
-    description: "გაყიდვების ხელოვნება",
-    fullDescription: "გაყიდვების ხელოვნება...",
-    borderColor: "hover:border-[#61DAFB]",
-    shadowColor: "hover:shadow-[8px_8px_0px_#61DAFB]",
-    circleColor: "bg-[#61DAFB]",
-    tagBg: "bg-blue-100 text-blue-700",
-    isDisabled: true,
-    image: "https://via.placeholder.com/300",
-    price: "600 ₾",
-    features: ["Components", "Hooks", "Redux"],
-    bonus: "პორტფოლიო",
-  },
+  }
+
   // ... სხვა კურსები
 ];

@@ -1,10 +1,8 @@
-import type React from "react";
+import React from "react";
 import bgImage from "../../../images/firstSectionCover.jpg";
 import beroLogo from "../../../images/beros logo .png";
 
 const FirstSection: React.FC = () => {
-
-
   // ფუნქცია ჩამოსასქროლად
   const scrollToCourses = () => {
     const section = document.getElementById("coursesSection");
@@ -26,7 +24,7 @@ const FirstSection: React.FC = () => {
 
       {/* ================= MAIN CONTENT ================= */}
       <div className="relative z-10 max-w-7xl mx-auto px-2 py-16 md:py-32 lg:py-44 flex flex-col items-center md:items-start text-center md:text-left">
-        {/* 1. ლოგო - შენარჩუნებულია -ml-[100px] */}
+        {/* 1. ლოგო */}
         <div className="flex items-start justify-start md:justify-start animate-fade-in-up mb-6">
           <div className="w-64 h-auto sm:w-80 md:w-[400px] -ml-[100px]">
             <img
@@ -38,15 +36,12 @@ const FirstSection: React.FC = () => {
         </div>
 
         {/* 2. მთავარი დიდი სათაური (H1) */}
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[5.0rem] font-extrabold text-white leading-tight max-w-4xl drop-shadow-lg">
-          Master skills
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[5.0rem] font-extrabold  text-white leading-tight max-w-4xl drop-shadow-lg">
+          გზა ფინანსური თავისუფლებისკენ
           <br className="hidden md:block" />{" "}
-          <span className="block mt-2"> to Unlock freedom</span>
         </h1>
 
-        {/* 3. ქვესათაური (შეგიძლია აქ t("firstSection.description") დააბრუნო თუ გჭირდება) */}
-
-        {/* 4. ღილაკი - დაემატა onClick={scrollToCourses} */}
+        {/* 4. ღილაკი */}
         <div className="mt-8 md:mt-12 w-full md:w-auto">
           <button
             onClick={scrollToCourses}
