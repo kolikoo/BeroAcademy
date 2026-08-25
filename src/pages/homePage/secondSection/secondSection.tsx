@@ -31,7 +31,7 @@ const SingleCard = ({
   return (
     <div
       onClick={handleCardClick}
-      className={`group relative overflow-hidden rounded-[20px] transition-all duration-300 h-full min-h-[450px] flex flex-col shadow-lg
+      className={`group relative overflow-hidden rounded-[20px] transition-all duration-300 h-full min-h-[520px] flex flex-col shadow-lg
         ${
           !card.isDisabled
             ? "cursor-pointer"
